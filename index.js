@@ -1,5 +1,6 @@
 // Function to fetch customer data from the API
 var customers;
+const baseUrl="http://localhost:8080"
 async function fetchCustomers() {
   try {
       // Get the JWT token from local storage
@@ -13,7 +14,7 @@ async function fetchCustomers() {
       }
 
       // Fetch data from the API using Authorization header
-      var response = await fetch("http://localhost:8080/api/v0/customer/", {
+      var response = await fetch(`${baseUrl}/api/v0/customer/`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -76,7 +77,7 @@ async function deleteCustomerByUUID(uuid) {
       }
 
       // Fetch data from the API using Authorization header
-      var response = await fetch(`http://localhost:8080/api/v0/customer/${uuid}`, {
+      var response = await fetch(`${baseUrl}/api/v0/customer/${uuid}`, {
           method: "DELETE",
           headers: {
               "Authorization": "Bearer " + jwtToken
@@ -86,7 +87,7 @@ async function deleteCustomerByUUID(uuid) {
       if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
+      
       return true;
   } catch (error) {
       console.error("Error deleting customer:", error);
@@ -106,7 +107,8 @@ async function deleteCustomer(uuid) {
 
       if (success) {
           // If deletion is successful, re-render the table
-          renderCustomers();
+          customers = await fetchCustomers();
+          renderCustomers(customers);
       } else {
           alert("Error deleting customer. Please try again.");
       }
@@ -156,7 +158,7 @@ async function submitUpdateForm(uuid) {
       };
       console.log(updatedCustomer);
       // Perform the update using the API
-      var response = await fetch("http://localhost:8080/api/v0/customer/", {
+      var response = await fetch(`${baseUrl}/api/v0/customer/`, {
           method: "PUT",
           headers: {
               "Content-Type": "application/json",
@@ -221,7 +223,7 @@ async function submitAddForm() {
       };
 
       // Perform the add using the API
-      var response = await fetch("http://localhost:8080/api/v0/customer/", {
+      var response = await fetch(`${baseUrl}/api/v0/customer/`, {
           method: "POST",
           headers: {
               "Content-Type": "application/json",
@@ -279,16 +281,16 @@ function performSearch() {
   var apiEndpoint;
   switch (searchType) {
       case "firstname":
-          apiEndpoint = `http://localhost:8080/api/v0/customer/search/n?name=${searchValue}`;
+          apiEndpoint = `${baseUrl}/api/v0/customer/search/n?name=${searchValue}`;
           break;
       case "email":
-          apiEndpoint = `http://localhost:8080/api/v0/customer/search/e?email=${searchValue}`;
+          apiEndpoint = `${baseUrl}/api/v0/customer/search/e?email=${searchValue}`;
           break;
       case "phone":
-          apiEndpoint = `http://localhost:8080/api/v0/customer/search/p?phone=${searchValue}`;
+          apiEndpoint = `${baseUrl}/api/v0/customer/search/p?phone=${searchValue}`;
           break;
       case "city":
-          apiEndpoint = `http://localhost:8080/api/v0/customer/search/c?city=${searchValue}`;
+          apiEndpoint = `${baseUrl}/api/v0/customer/search/c?city=${searchValue}`;
           break;
       default:
           console.error("Invalid search type");

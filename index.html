@@ -77,12 +77,14 @@
                         <input type="text" class="form-control" id="PoPupState" required>
                     </div>
                     <div class="form-group">
-                        <label for="updateEmail">Email:</label>
-                        <input type="email" class="form-control" id="PoPupEmail" required>
+                        <label for="PoPupEmail">Email:</label>
+                        <input type="email" class="form-control" id="PoPupEmail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                            title="Please enter a valid email address">
                     </div>
                     <div class="form-group">
-                        <label for="updatePhone">Phone:</label>
-                        <input type="tel" class="form-control" id="PoPupPhone" required>
+                        <label for="PoPupPhone">Phone:</label>
+                        <input type="tel" class="form-control" id="PoPupPhone" required pattern="[0-9]{10,}"
+                            title="Please enter a valid 10-digit phone number">
                     </div>
                 </form>
 
