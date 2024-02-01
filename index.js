@@ -5,11 +5,11 @@ async function fetchCustomers() {
   try {
       // Get the JWT token from local storage
       var jwtToken = localStorage.getItem("jwtToken");
-      console.log(jwtToken);
+      //console.log(jwtToken);
       if (!jwtToken) {
 
           console.error("JWT token not found in local storage.");
-          window.location="/Login_Page/index.html"
+          window.location="/login/"
           return;
       }
 
@@ -29,7 +29,7 @@ async function fetchCustomers() {
       var data = await response.json();
       return data;
   } catch (error) {
-    window.location="/Login_Page/index.html"
+    window.location="/login/"
       console.error("Error fetching data:", error);
       return [];
   }

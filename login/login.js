@@ -39,3 +39,22 @@ function submitForm() {
         // Handle errors
     });
 }
+async function checkLogin(){
+    var jwtToken = localStorage.getItem("jwtToken");
+    if(!jwtToken){
+        return;
+    }
+    var response = await fetch(`http://localhost:8080/api/v0/user/check/login`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + jwtToken
+        },
+    });
+    if(!response.ok){
+        return;
+    }
+
+    window.location="/"
+}
+checkLogin().catch();
